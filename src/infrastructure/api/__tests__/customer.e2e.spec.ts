@@ -38,6 +38,7 @@ describe("E2E test for customer", () => {
     expect(response.status).toBe(500);
   });
 
+  //
   it("should list all customer", async () => {
     const response = await request(app)
       .post("/customer")
