@@ -1,62 +1,66 @@
-import Customer from "./customer";
+import NotificationError from "../../@shared/notification/notification.error";
 import Address from "../value-object/address";
+import Customer from "./customer";
 
-describe("Customer unit Tests", () => {
+describe("Customer unit tests", () => {
 
-    it('should throw error when id is empty', () => {
-
+    it("should throw error when id is empty", () => {
         expect(() => {
-            const customer = new Customer("", "John");
-        }).toThrowError("Id is required");
-    });
+            let customer = new Customer("", "John");
+        }).toThrowError("customer: Id is required");
+    });   
 
-    it('should throw error when name is empty', () => {
-
+    it("should throw error when name is empty", () => {
         expect(() => {
-            const customer = new Customer("123", "");
-        }).toThrowError("Name is required");
-    });
+            let customer = new Customer("123", "");
+        }).toThrowError("customer: Name is required");
+    });  
 
-    it('should change Name', () => {
+    it("should throw error when name and id is empty", () => {
+        expect(() => {
+            let customer = new Customer("", "");
+        }).toThrowError("customer: Id is required,customer: Name is required");
+    });  
 
-            const customer = new Customer("123", "John");
+    it("should change name", () => {
 
-            customer.changeName("Jane");
+        const customer = new Customer("123", "John");
 
-            expect(customer.name).toBe("Jane");
-    });
+        customer.changeName("Jane")
 
-    it('should activate customer', () => {
+        expect(customer.name).toBe("Jane");
+    });  
+
+    it("should activate customer", () => {
 
         const customer = new Customer("1", "Customer 1");
-
-        const address = new Address("Street 1", 123, "133330-250", "Sâo Paulo");
-
-        customer.address = address;
-
+        const address = new Address("Street 1", 123, "85506-050", "Pato Branco");
+        customer.Address = address;
         customer.activate();
 
         expect(customer.isActive()).toBe(true);
-    });
+    })
 
     it("should deactivate customer", () => {
-        const customer = new Customer("1", "Customer 1");
 
+        const customer = new Customer("1", "Customer 1");
         customer.deactivate();
 
         expect(customer.isActive()).toBe(false);
-    });
+    })
 
-    it('should throw error when address is undefined when you activate a customer', () => {
+    it("should throw error when address is undefined when you activate a customer", () => {
 
         expect(() => {
             const customer = new Customer("1", "Customer 1");
             customer.activate();
-        }).toThrowError("Address is mandatory to activate a customer");
-    });
+        }).toThrowError("Address is mandatory to activate a customer")
 
-    it("should add reward points", () => {
-        const customer = new Customer("1", "Customer 1");
+    })
+
+    it ("should add reward points", () => {
+
+        const customer = new Customer("1", "Customer1");
         expect(customer.rewardPoints).toBe(0);
 
         customer.addRewardPoints(10);
@@ -64,5 +68,6 @@ describe("Customer unit Tests", () => {
 
         customer.addRewardPoints(10);
         expect(customer.rewardPoints).toBe(20);
-    });
+    })
 });
+

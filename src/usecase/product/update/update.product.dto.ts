@@ -1,7 +1,7 @@
 export interface InputUpdateProductDto {
     id: string;
     name: string;
-    price: number;
+    price: number; 
 }
 
 export interface OutputUpdateProductDto {
@@ -9,3 +9,4 @@ export interface OutputUpdateProductDto {
     name: string;
     price: number;
 }
+

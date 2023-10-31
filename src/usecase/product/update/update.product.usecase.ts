@@ -1,29 +1,29 @@
 import ProductRepositoryInterface from "../../../domain/product/repository/product-repository.interface";
-import {InputUpdateProductDto, OutputUpdateProductDto} from "./update.product.dto";
-import Product from "../../../domain/product/entity/product";
+import { InputUpdateProductDto, OutputUpdateProductDto } from "./update.product.dto";
 
-export default class UpdateProductUsecase {
-  private productRepository: ProductRepositoryInterface;
-  constructor(productRepository: ProductRepositoryInterface) {
-    this.productRepository = productRepository;
-  }
+export default class UpdateProductUseCase {
 
-  async execute(
-    input: InputUpdateProductDto
-  ): Promise<OutputUpdateProductDto> {
-    const productInterface = await this.productRepository.find(input.id);
+    private productRepository: ProductRepositoryInterface
 
-    const product = new Product(
-        productInterface.id,
-        input.name,
-        input.price,
-    );
-    await this.productRepository.update(product);
+    constructor(productRepository: ProductRepositoryInterface) {
+        this.productRepository = productRepository
+    }
 
-    return {
-      id: product.id,
-      name: product.name,
-      price: product.price,
-    };
-  }
+    async execute(input: InputUpdateProductDto): Promise<OutputUpdateProductDto> {
+
+        const product = await this.productRepository.find(input.id)
+
+        if (product == null) {
+            throw new Error("Product not found!")
+        }
+
+        product.changeName(input.name);
+        product.changePrice(input.price);
+
+        return {
+            id: product.id,
+            name: product.name,
+            price: product.price
+        }
+    }
 }

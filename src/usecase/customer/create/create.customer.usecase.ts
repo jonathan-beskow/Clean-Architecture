@@ -1,42 +1,33 @@
-import CustomerRepositoryInterface from "../../../domain/customer/repository/customer-repository.interface";
-import {
-  InputCreateCustomerDto,
-  OutputCreateCustomerDto,
-} from "./create.customer.dto";
+import { UUID } from "sequelize";
+import CustomertRepositoryInterface from "../../../domain/customer/repository/customer-repository.interface";
+import { InputCreateCustomerDto, OutputCreateCustomerDto } from "./create.customer.dto";
 import CustomerFactory from "../../../domain/customer/factory/customer.factory";
 import Address from "../../../domain/customer/value-object/address";
 
-export default class CreateCustomerUseCase {
-  private customerRepository: CustomerRepositoryInterface;
+export default class CustomerCreateUseCase {
+    private customerRepository: CustomertRepositoryInterface;
 
-  constructor(customerRepository: CustomerRepositoryInterface) {
-    this.customerRepository = customerRepository;
-  }
+    constructor(customerRepository: CustomertRepositoryInterface) {
+        this.customerRepository = customerRepository;
+    }
 
-  async execute(
-    input: InputCreateCustomerDto
-  ): Promise<OutputCreateCustomerDto> {
-    const customer = CustomerFactory.createWithAddress(
-      input.name,
-      new Address(
-        input.address.street,
-        input.address.number,
-        input.address.zip,
-        input.address.city
-      )
-    );
+    async execute(input: InputCreateCustomerDto): Promise<OutputCreateCustomerDto> {
+        const customer = CustomerFactory.createWithAddress(input.name, new Address(input.address.street,
+            input.address.number,
+            input.address.zip,
+            input.address.city));
 
-    await this.customerRepository.create(customer);
+        await this.customerRepository.create(customer);
 
-    return {
-      id: customer.id,
-      name: customer.name,
-      address: {
-        street: customer.address.street,
-        number: customer.address.number,
-        zip: customer.address.zip,
-        city: customer.address.city,
-      },
-    };
-  }
+        return {
+            id: customer.id,
+            name: customer.name,
+            address: {
+                street: customer.Address.street,
+                number: customer.Address.number,
+                zip: customer.Address.zip,
+                city: customer.Address.city
+            }
+        }
+    }
 }

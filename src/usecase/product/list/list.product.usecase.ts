@@ -1,29 +1,36 @@
-import ProductRepositoryInterface from "../../../domain/product/repository/product-repository.interface";
-import {InputListProductDto, OutputListProductDto} from "./list.product.dto";
+import Product from "../../../domain/product/entity/product";
 import ProductInterface from "../../../domain/product/entity/product.interface";
+import ProductRepositoryInterface from "../../../domain/product/repository/product-repository.interface";
+import { OutputCreateProductDto } from "../create/create.product.dto";
+import { InputListProductDto, OutputListProductDto } from "./list.product.dto";
 
-export default class ListProductUsecase {
-  private productRepository: ProductRepositoryInterface;
-  constructor(productRepository: ProductRepositoryInterface) {
-    this.productRepository = productRepository;
-  }
+export default class ListProductUseCase {
 
-  async execute(input: InputListProductDto): Promise<OutputListProductDto> {
-    const products = await this.productRepository.findAll();
-    return OutputMapper.toOutput(products);
-  }
+    private productRepository: ProductRepositoryInterface;
+
+    constructor(productRepository: ProductRepositoryInterface) {
+        this.productRepository = productRepository
+    }
+
+    async execute(input: InputListProductDto): Promise<OutputListProductDto> {
+        const products = await this.productRepository.findAll();
+        return OutputMapper.toOutput(products);
+    }
 }
 
-// tslint:disable-next-line:max-classes-per-file
 class OutputMapper {
-  static toOutput(products: ProductInterface[]): OutputListProductDto {
-    return {
-      // tslint:disable-next-line:no-shadowed-variable
-      products: products.map((product) => ({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-      })),
-    };
-  }
+    static toOutput(product: ProductInterface[]): OutputListProductDto {
+        return {
+            products: product.map((product) => ({
+                id: product.id,
+                name: product.name,
+                price: product.price
+            })
+        )}
+    }
 }
+
+
+
+
+

@@ -1,4 +1,7 @@
 export default interface EventInterface {
-    dataTimeOccurred: Date;
+
+    dataTimeOccured: Date;
     eventData: any;
+
+    
 }

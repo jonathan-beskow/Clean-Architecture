@@ -3,13 +3,13 @@ import {
     Model,
     PrimaryKey,
     Column
-  } from "sequelize-typescript";
+} from "sequelize-typescript";
 
-  @Table({
+@Table({
     tableName: "customers",
     timestamps: false,
-  })
-  export default class CustomerModel extends Model {
+})
+export default class CustomerModel extends Model {
     @PrimaryKey
     @Column
     declare id: string;
@@ -34,4 +34,5 @@ import {
 
     @Column({ allowNull: false })
     declare rewardPoints: number;
-  }
+}
+

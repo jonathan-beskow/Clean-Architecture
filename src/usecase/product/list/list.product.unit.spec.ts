@@ -1,31 +1,34 @@
-import ProductFactory from "../../../domain/product/factory/product.factory";
-import ListProductUsecase from "./list.product.usecase";
+import Product from "../../../domain/product/entity/product";
+import ListProductUseCase from "./list.product.usecase";
 
-const productA = ProductFactory.create("a", "Product A", 15);
-const productB = ProductFactory.create("b", "Product b", 10);
+const product1 = new Product("1", "product1", 100)
+
+const product2 = new Product("2", "product2", 200)
 
 const MockRepository = () => {
-  return {
-    create: jest.fn(),
-    find: jest.fn(),
-    update: jest.fn(),
-    findAll: jest.fn().mockReturnValue(Promise.resolve([productA, productB])),
-  };
+    return {
+        create: jest.fn(),
+        find: jest.fn(),
+        update: jest.fn(),
+        findAll: jest.fn().mockReturnValue(Promise.resolve([product1, product2])),
+    };
 };
 
-describe("Unit test for listing products use case", () => {
-  it("should list a products", async () => {
-    const repository = MockRepository();
-    const useCase = new ListProductUsecase(repository);
+describe("Unit test for listing product use case", () => {
 
-    const output = await useCase.execute({});
+    it("should list a product", async () => {
+        const repository = MockRepository();
+        const useCase = new ListProductUseCase(repository);
 
-    expect(output.products.length).toBe(2);
-    expect(output.products[0].id).toBe(productA.id);
-    expect(output.products[0].name).toBe(productA.name);
-    expect(output.products[0].price).toBe(productA.price);
-    expect(output.products[1].id).toBe(productB.id);
-    expect(output.products[1].name).toBe(productB.name);
-    expect(output.products[1].price).toBe(productB.price);
-  });
+        const output = await useCase.execute({});
+
+        expect(output.products.length).toBe(2);
+        expect(output.products[0].id).toBe(product1.id);
+        expect(output.products[0].name).toBe(product1.name);
+        expect(output.products[0].price).toBe(product1.price);
+        expect(output.products[1].id).toBe(product2.id);
+        expect(output.products[1].name).toBe(product2.name);
+        expect(output.products[1].price).toBe(product2.price);
+    });
 });
+

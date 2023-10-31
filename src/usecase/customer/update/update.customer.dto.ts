@@ -1,3 +1,5 @@
+import CustomertRepositoryInterface from "../../../domain/customer/repository/customer-repository.interface";
+
 export interface InputUpdateCustomerDto {
     id: string;
     name: string;
@@ -6,7 +8,7 @@ export interface InputUpdateCustomerDto {
         number: number;
         zip: string;
         city: string;
-    };
+    }
 }
 
 export interface OutputUpdateCustomerDto {
@@ -17,5 +19,6 @@ export interface OutputUpdateCustomerDto {
         number: number;
         zip: string;
         city: string;
-    };
+    }
 }
+

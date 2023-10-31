@@ -1,30 +1,32 @@
 import Product from "../../../domain/product/entity/product";
-import UpdateProductUsecase from "./update.product.usecase";
+import UpdateProductUseCase from "./update.product.usecase";
 
-const product = new Product("id", "product A", 10);
+const product = new Product("1", "Product 1", 100)
 
 const input = {
-  id: product.id,
-  name: "product Updated",
-  price: 15,
-};
+    id: product.id,
+    name: "Product Updated",
+    price: 200
+}
 
 const MockRepository = () => {
-  return {
-    create: jest.fn(),
-    findAll: jest.fn(),
-    find: jest.fn().mockReturnValue(Promise.resolve(product)),
-    update: jest.fn(),
-  };
+    return {
+        find: jest.fn().mockReturnValue(Promise.resolve(product)),
+        findAll: jest.fn(),
+        create: jest.fn(),
+        update: jest.fn(),
+    };
 };
 
-describe("Unit test for customer update use case", () => {
-  it("should update a customer", async () => {
-    const productRepository = MockRepository();
-    const productUpdateUseCase = new UpdateProductUsecase(productRepository);
+describe("Unit test for product update use case", () => {
 
-    const output = await productUpdateUseCase.execute(input);
+    it("should update a product", async () => {
+        const productRepository = MockRepository();
+        const customerUpdateUseCase = new UpdateProductUseCase(productRepository);
 
-    expect(output).toEqual(input);
-  });
-});
+        const output = await customerUpdateUseCase.execute(input);
+
+        expect(output).toEqual(input);
+
+    })
+})
