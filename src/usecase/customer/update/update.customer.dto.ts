@@ -6,7 +6,7 @@ export interface InputUpdateCustomerDto {
         number: number;
         zip: string;
         city: string;
-    };  
+    };
 }
 
 export interface OutputUpdateCustomerDto {
@@ -17,5 +17,5 @@ export interface OutputUpdateCustomerDto {
         number: number;
         zip: string;
         city: string;
-    };  
+    };
 }

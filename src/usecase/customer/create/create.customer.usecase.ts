@@ -3,7 +3,6 @@ import {
   InputCreateCustomerDto,
   OutputCreateCustomerDto,
 } from "./create.customer.dto";
-import { v4 as uuid } from "uuid";
 import CustomerFactory from "../../../domain/customer/factory/customer.factory";
 import Address from "../../../domain/customer/value-object/address";
 
@@ -33,10 +32,10 @@ export default class CreateCustomerUseCase {
       id: customer.id,
       name: customer.name,
       address: {
-        street: customer.Address.street,
-        number: customer.Address.number,
-        zip: customer.Address.zip,
-        city: customer.Address.city,
+        street: customer.address.street,
+        number: customer.address.number,
+        zip: customer.address.zip,
+        city: customer.address.city,
       },
     };
   }

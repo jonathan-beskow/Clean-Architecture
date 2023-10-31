@@ -1,17 +1,17 @@
 import Customer from "../../../../domain/customer/entity/customer";
-import Address from "../../../../domain/customer/value-object/address";
-import CustomerRepositoryInterface from "../../../../domain/customer/repository/customer-repository.interface";
 import CustomerModel from "./customer.model";
+import CustomerRepositoryInterface from "../../../../domain/customer/repository/customer-repository.interface";
+import Address from "../../../../domain/customer/value-object/address";
 
 export default class CustomerRepository implements CustomerRepositoryInterface {
   async create(entity: Customer): Promise<void> {
     await CustomerModel.create({
       id: entity.id,
       name: entity.name,
-      street: entity.Address.street,
-      number: entity.Address.number,
-      zipcode: entity.Address.zip,
-      city: entity.Address.city,
+      street: entity.address.street,
+      number: entity.address.number,
+      zipcode: entity.address.zip,
+      city: entity.address.city,
       active: entity.isActive(),
       rewardPoints: entity.rewardPoints,
     });
@@ -21,10 +21,10 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
     await CustomerModel.update(
       {
         name: entity.name,
-        street: entity.Address.street,
-        number: entity.Address.number,
-        zipcode: entity.Address.zip,
-        city: entity.Address.city,
+        street: entity.address.street,
+        number: entity.address.number,
+        zipcode: entity.address.zip,
+        city: entity.address.city,
         active: entity.isActive(),
         rewardPoints: entity.rewardPoints,
       },
@@ -63,8 +63,9 @@ export default class CustomerRepository implements CustomerRepositoryInterface {
   async findAll(): Promise<Customer[]> {
     const customerModels = await CustomerModel.findAll();
 
+    // tslint:disable-next-line:no-shadowed-variable
     const customers = customerModels.map((customerModels) => {
-      let customer = new Customer(customerModels.id, customerModels.name);
+      const customer = new Customer(customerModels.id, customerModels.name);
       customer.addRewardPoints(customerModels.rewardPoints);
       const address = new Address(
         customerModels.street,

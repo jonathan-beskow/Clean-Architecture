@@ -1,69 +1,73 @@
-import Entity from "../../@shared/entity/entity.abstract";
 import Address from "../value-object/address";
-import NotificationError from "../../@shared/notification/notification.error";
-import CustomerValidatorFactory from "../factory/customer.validator.factory";
 
-export default class Customer extends Entity {
-  private _name: string = "";
-  private _address!: Address;
-  private _active: boolean = false;
-  private _rewardPoints: number = 0;
+export default class Customer {
+    private _id: string;
+    private _name: string = "";
+    private _address!: Address;
+    private _active: boolean = false;
+    private _rewardPoints: number = 0;
 
-  constructor(id: string, name: string) {
-    super();
-    this._id = id;
-    this._name = name;
-    this.validate();
-    if (this.notification.hasErrors()) {
-      throw new NotificationError(this.notification.getErrors());
+    constructor(id: string, name: string) {
+        this._id = id;
+        this._name = name;
+        this.validate();
     }
-  }
 
-  get name(): string {
-    return this._name;
-  }
-
-  get rewardPoints(): number {
-    return this._rewardPoints;
-  }
-
-  validate() {
-    CustomerValidatorFactory.create().validate(this);
-  }
-
-  changeName(name: string) {
-    this._name = name;
-    this.validate();
-  }
-
-  get Address(): Address {
-    return this._address;
-  }
-
-  changeAddress(address: Address) {
-    this._address = address;
-  }
-
-  isActive(): boolean {
-    return this._active;
-  }
-
-  activate() {
-    if (this._address === undefined) {
-      throw new Error("Address is mandatory to activate a customer");
+    get id(): string {
+        return this._id;
     }
-    this._active = true;
-  }
 
-  deactivate() {
-    this._active = false;
-  }
+    get name(): string {
+        return this._name;
+    }
 
-  addRewardPoints(points: number) {
-    this._rewardPoints += points;
-  }
+    get rewardPoints(): number {
+        return this._rewardPoints;
+    }
 
-  set Address(address: Address) {
-    this._address = address;
-  }
+    validate() {
+        if (this._id.length === 0) {
+            throw new Error("Id is required");
+        }
+        if (this._name.length === 0) {
+            throw new Error("Name is required");
+        }
+    }
+
+    changeName(name: string) {
+        this._name = name;
+        this.validate();
+    }
+
+    get address(): Address {
+        return this._address;
+    }
+
+    changeAddress(address: Address) {
+        this._address = address;
+    }
+
+    isActive(): boolean {
+        return this._active;
+    }
+
+    activate() {
+        if (this._address === undefined) {
+            throw new Error("Address is mandatory to activate a customer");
+        }
+        this._active = true;
+    }
+
+    deactivate() {
+        this._active = false;
+    }
+
+    addRewardPoints(points: number) {
+        this._rewardPoints += points;
+    }
+
+    // tslint:disable-next-line:adjacent-overload-signatures
+    set address(address: Address) {
+        this._address = address;
+    }
 }

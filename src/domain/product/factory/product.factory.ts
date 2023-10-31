@@ -1,6 +1,7 @@
 import Product from "../entity/product";
 import ProductInterface from "../entity/product.interface";
 import { v4 as uuid } from "uuid";
+// @ts-ignore
 import ProductB from "../entity/product-b";
 
 export default class ProductFactory {

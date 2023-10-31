@@ -17,17 +17,19 @@ export default class ListCustomerUseCase {
   }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 class OutputMapper {
   static toOutput(customer: Customer[]): OutputListCustomerDto {
     return {
+      // tslint:disable-next-line:no-shadowed-variable
       customers: customer.map((customer) => ({
         id: customer.id,
         name: customer.name,
         address: {
-          street: customer.Address.street,
-          number: customer.Address.number,
-          zip: customer.Address.zip,
-          city: customer.Address.city,
+          street: customer.address.street,
+          number: customer.address.number,
+          zip: customer.address.zip,
+          city: customer.address.city,
         },
       })),
     };
